@@ -49,6 +49,12 @@ let secondNumber = 0;
 let equationObject = {};
 const wrongFormat = [];
 
+// dispalay game page
+function showGamePage(){
+    gamePage.hidden=false;
+    countdownPage.style.display = 'none';
+}
+
 //get random number up to a max number
 function getRandomInt(max){
        return Math.floor(Math.random() * Math.floor(max));
@@ -94,6 +100,24 @@ function createEquations(){
     }
     shuffle(equationsArray);
     console.log('eque array:', equationsArray);
+    equationsToDOM();
+}
+
+
+// generta the equsition as html through DOM
+function equationsToDOM(){
+    equationsArray.forEach((equation)=>{
+        //item
+        const item = document.createElement('div');
+        item.classList.add('item');
+        // equation text 
+        const equationText = document.createElement('h1');
+        equationText.textContent= equation.value;
+        //append 
+        item.appendChild(equationText);
+        itemContainer.appendChild(item);
+
+    })
 }
 
 
@@ -124,6 +148,7 @@ function showCountdown(){
         splashPage.hidden=true;
         countdownStart();
         createEquations();
+        setTimeout(showGamePage, 4000);
     }else{
         alert('choose an item')
     }

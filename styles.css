@@ -134,7 +134,15 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow: scroll;
+    text-align: center;
+    position: relative;
+    
 
+}
+#game-page::-webkit-scrollbar{
+    width: 0;
+    height: 0;
 }
 
 .item-container{
@@ -150,21 +158,22 @@ body{
 
 .item{
     z-index: 100;
-    padding-left: 1rem;
+    
 }
 
 
 /* wrong wright butoons section */
 .item-footer{
-    margin-bottom: 2rem;
-    position: relative;
+    
+    position: absolute;
     display: flex;
     flex-direction: row;
     width: 70%;
     justify-content: space-between;
     align-items: center;
-    
+    bottom: 0;
     column-gap: 1rem;
+    background-color: black;
 }
 
 .item-footer button{
@@ -259,8 +268,24 @@ cursor: pointer;
     .game-container{
     height: 500px;
     width: 90vw;
-    padding-bottom: 1rem;
     position: relative;
+    }
+
+    #game-page{
+        
+        margin: 0;
+        position: relative;
+        
+    }
+    
+    .item-footer{
+        width: 95%;
+        margin-bottom: 1rem;
+        position: absolute;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
     }
 
     #countdown-page{
