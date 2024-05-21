@@ -18,3 +18,29 @@ function populateGamePage(){
     bottomSpacer.classList.add('height-500');
     itemContainer.append(bottomSpacer);
 }
+
+
+
+
+
+
+
+
+
+function populateGamePage(){
+    createEquations();
+    equationsToDOM();
+    const equationIndex = 0;
+    equationsArray.forEach((equation) => {
+        itemContainer.textContent = `${equation[equationIndex]}`;
+        rightButton.addEventListener('click', ()=>{
+            itemContainer.textContent=`${equation[equationIndex+1]}`
+        })
+        wrongButton.addEventListener('click', ()=>{
+            itemContainer.textContent=`${equation[equationIndex+1]}`
+        })
+    })
+
+    console.log(equationIndex);
+
+}
