@@ -32,7 +32,7 @@ body{
     height: 70vh;
     width: 40vw;
     border-radius: 0.5rem;
-    display: flex;
+    /* display: flex; */
     position: relative;
     flex-direction: column;
 }
@@ -215,11 +215,29 @@ cursor: pointer;
 
 
 /* score page */
+#score-page{
+    margin: 0;
+   
+    
+}
 .score-container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    
+    
+}
+
+.score-footer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow:hidden;
+    position: absolute;
+    bottom: 0px;
 }
 
 .score-container h1{
@@ -245,16 +263,7 @@ cursor: pointer;
     color: rgb(218, 72, 56);
 }
 
-.score-footer{
-    
-    
-    width: 100%;
-   
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow:hidden;
-}
+
 
 .play-again{
     width: 80%;
@@ -269,10 +278,7 @@ cursor: pointer;
     cursor: pointer;
 }
 
-#score-page{
-    position: relative;
-    margin: 0;
-}
+
 
 .height-240{
     height: 120px;

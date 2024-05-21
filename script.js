@@ -58,6 +58,24 @@ let penaltyTime = 0;
 let finalTime = 0;
 let finalTimeDisplay = '0.0s';
 
+//show the score page
+function showScorePage(){
+   
+    gamePage.hidden = true;
+    scorePage.hidden = false;
+
+}
+
+//format and dispaly time in DOM
+function scoresToDOM(){
+    finalTimeDisplay = finalTime.toFixed(1);
+    baseTime = timePlayed.toFixed(1);
+    penaltyTime = penaltyTime.toFixed(1);
+    baseTimeEl.textContent = `Base Time: ${baseTime}s`;
+    penaltyTimeEl.textContent = `Penalty: +${penaltyTime}s`;
+    finalTimeEl.textContent = `${finalTimeDisplay}s`;
+    showScorePage();
+}
 
 // stop timer, process results, go to score page
 function checkTime(){
@@ -70,7 +88,7 @@ function checkTime(){
         console.log('player guess array', playerGuessArray);
        //check wrong gueses, add penalty time
         equationsArray.forEach((equation, index) => {
-            if(equation.evaluated === playerGuessArray[index]){
+            if(equation.evaluated == playerGuessArray[index]){
                // correct guess, no penalty
 
             }else{
@@ -81,9 +99,9 @@ function checkTime(){
         });
         finalTime = timePlayed + penaltyTime;
         console.log('final time', finalTime);
-        finalTimeDisplay = finalTime.toFixed(1);
         console.log('final time display', finalTimeDisplay);
         console.log('time', timePlayed);
+        scoresToDOM();
 
 
     }
@@ -237,7 +255,7 @@ function countdownStart(){
             countdown.textContent = 'GO!';
             clearInterval(countdownSetInterval);
         }
-    }, 1000);
+    }, 100);
 
 }
 
@@ -249,7 +267,7 @@ function showCountdown(){
         splashPage.hidden=true;
         countdownStart();
         populateGamePage();
-        setTimeout(showGamePage, 4000);
+        setTimeout(showGamePage, 400);
     }else{
         alert('choose an item')
     }
