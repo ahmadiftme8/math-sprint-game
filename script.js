@@ -49,6 +49,8 @@ let secondNumber = 0;
 let equationObject = {};
 const wrongFormat = [];
 
+
+
 // dispalay game page
 function showGamePage(){
     gamePage.hidden=false;
@@ -99,8 +101,7 @@ function createEquations(){
         equationsArray.push(equationObject);
     }
     shuffle(equationsArray);
-    console.log('eque array:', equationsArray);
-    equationsToDOM();
+    
 }
 
 
@@ -147,7 +148,7 @@ function showCountdown(){
         countdownPage.hidden = false;
         splashPage.hidden=true;
         countdownStart();
-        createEquations();
+        populateGamePage();
         setTimeout(showGamePage, 4000);
     }else{
         alert('choose an item')
