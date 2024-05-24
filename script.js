@@ -11,7 +11,7 @@ const selectionContainer = document.querySelector('.selection-container');
 const radioContainers = document.querySelectorAll('.radio-container');
 const radioInputs = document.querySelectorAll('.radio-input');
 const labels = document.querySelectorAll('.label-radio');
-const bestScores = document.querySelectorAll('.best-score');
+const bestScoresEl = document.querySelectorAll('.best-score');
 const bestScoreTexts = document.querySelectorAll('.best-score span');
 const bestScoreValues = document.querySelectorAll('.best-score-value');
 const selectionFooter = document.querySelector('.selection-footer');
@@ -42,13 +42,15 @@ const playAgainButton = document.querySelector('.play-again');
 //equations
 let questionAmount = 0;
 let equationsArray = [];
+let playerGuessArray = [];
+let bestScoresArray = [];
 
 //Game Page
 let firstNumber = 0;
 let secondNumber = 0;
 let equationObject = {};
 const wrongFormat = [];
-let playerGuessArray = [];
+
 
 //Time
 let timer;
@@ -56,13 +58,86 @@ let timePlayed = 0;
 let baseTime = 0;
 let penaltyTime = 0;
 let finalTime = 0;
-let finalTimeDisplay = '0.0s';
+let finalTimeDisplay = '0.0';
+
+//refreshspash page best scores
+function bestScoresToDOM(){
+    bestScoresArray.forEach((bestScore, index) => {
+       /* const bestScoreValues = bestScore; */
+       bestScoreValues[index].textContent = `${bestScoresArray[index].bestScore}s`;
+    });
+}
+
+/* bestScoreValues[0].textContent='hi mom'; */
+
+
+
+
+
+
+
+//check local storage for best scoes, set bestscoresArray
+function getSavedBestScores(){
+    console.log('best sc arr befor:',bestScoresArray);
+    if(localStorage.getItem('bestScore')){
+        bestScoresArray = JSON.parse(localStorage.bestScore);
+        
+    }else{
+        bestScoresArray = [
+            {questions: 10, bestScore: finalTimeDisplay},
+            {questions: 25, bestScore: finalTimeDisplay},
+            {questions: 50, bestScore: finalTimeDisplay},
+            {questions: 99, bestScore: finalTimeDisplay}
+        ];
+        localStorage.setItem('bestScore', JSON.stringify(bestScoresArray));
+        console.log('best sc arr after:',bestScoresArray);
+    }
+    bestScoresToDOM();
+}
+
+
+//update best score array
+function updateBestScore(){
+    bestScoresArray.forEach((score, index) => {
+        //select correct best score to update
+        if(questionAmount == score.questions){
+            //return best score as number with one decimal
+            const saveBestScore = Number(bestScoresArray[index].bestScore);
+            //update if the new final time is less or replacing zero
+            if(saveBestScore === 0 || saveBestScore > finalTimeDisplay){
+                bestScoresArray[index].bestScore = finalTimeDisplay;
+            }
+            
+        }
+    });
+    //update splash page
+    bestScoresToDOM();
+    localStorage.setItem('bestScore', JSON.stringify(bestScoresArray));
+
+}
+
+//reset game
+function playAgain(){
+    gamePage.addEventListener('click', startTimer);
+    scorePage.hidden = true;
+    splashPage.hidden = false;
+    equationsArray = [];
+    playerGuessArray = [];
+}
 
 //show the score page
 function showScorePage(){
    
     gamePage.hidden = true;
     scorePage.hidden = false;
+
+    scoreFooter.style.opacity = "0";
+        scoreFooter.style.visibility = "hidden";
+    
+    setTimeout(() => {
+        scoreFooter.style.opacity = "1";
+        scoreFooter.style.visibility = "visible";
+    }, 1000);
 
 }
 
@@ -74,7 +149,9 @@ function scoresToDOM(){
     baseTimeEl.textContent = `Base Time: ${baseTime}s`;
     penaltyTimeEl.textContent = `Penalty: +${penaltyTime}s`;
     finalTimeEl.textContent = `${finalTimeDisplay}s`;
+    updateBestScore();
     showScorePage();
+
 }
 
 // stop timer, process results, go to score page
@@ -151,10 +228,17 @@ function populateGamePage(){
         
     })
 
+    
 
     rightButton.addEventListener('click', function() {
-        itemContainer.textContent = `${equationsArray[equationIndex++].value}`;
-    console.log(equationIndex);
+
+        if(equationIndex > equationsArray.length - 1){
+            equationIndex = 0;
+        }else{
+            itemContainer.textContent = `${equationsArray[equationIndex++].value}`;
+        console.log(equationIndex);
+        }
+        
 });
 
 wrongButton.addEventListener('click', function() {
@@ -333,6 +417,9 @@ containers.forEach(container => {
 //Event Listenes
 startForm.addEventListener('submit', selectQuestionAmount);
 gamePage.addEventListener('click', startTimer);
+
+//on load 
+getSavedBestScores();
 
 
 
