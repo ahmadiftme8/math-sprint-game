@@ -24,6 +24,7 @@ body{
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
 
 }
 
@@ -357,10 +358,11 @@ cursor: pointer;
     }
 }
 
-@media  screen and (max-height: 400px) {
+@media  screen and (max-height: 480px) {
     .game-container{
         margin-top: 10rem;
         width: 70%;
     }
 }
+
 

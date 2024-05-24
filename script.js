@@ -126,6 +126,7 @@ function playAgain(){
     equationsArray = [];
     playerGuessArray = [];
     console.log('questionAmount:',questionAmount);
+    
 
 }
 
