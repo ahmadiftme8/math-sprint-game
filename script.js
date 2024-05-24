@@ -118,11 +118,15 @@ function updateBestScore(){
 
 //reset game
 function playAgain(){
-    gamePage.addEventListener('click', startTimer);
+    itemFooter.addEventListener('click', startTimer);
+    questionAmount = 0;
     scorePage.hidden = true;
     splashPage.hidden = false;
+    
     equationsArray = [];
     playerGuessArray = [];
+    console.log('questionAmount:',questionAmount);
+
 }
 
 //show the score page
@@ -161,7 +165,7 @@ function checkTime(){
     if(playerGuessArray.length == questionAmount){
         
         clearInterval(timer);
-        gamePage.removeEventListener('click', startTimer);
+        itemFooter.removeEventListener('click', startTimer);
         console.log('player guess array', playerGuessArray);
        //check wrong gueses, add penalty time
         equationsArray.forEach((equation, index) => {
@@ -197,7 +201,7 @@ function startTimer(){
     penaltyTime = 0;
     finalTime = 0;
     timer = setInterval(addTime, 100);
-    gamePage.removeEventListener('click', startTimer);
+    itemFooter.removeEventListener('click', startTimer);
     
 }
 
@@ -339,7 +343,7 @@ function countdownStart(){
             countdown.textContent = 'GO!';
             clearInterval(countdownSetInterval);
         }
-    }, 100);
+    }, 600);
 
 }
 
@@ -350,8 +354,8 @@ function showCountdown(){
         countdownPage.hidden = false;
         splashPage.hidden=true;
         countdownStart();
+        setTimeout(showGamePage, 2400);
         populateGamePage();
-        setTimeout(showGamePage, 400);
     }else{
         alert('choose an item')
     }
@@ -416,7 +420,7 @@ containers.forEach(container => {
 
 //Event Listenes
 startForm.addEventListener('submit', selectQuestionAmount);
-gamePage.addEventListener('click', startTimer);
+itemFooter.addEventListener('click', startTimer);
 
 //on load 
 getSavedBestScores();
